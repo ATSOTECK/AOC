@@ -21,7 +21,7 @@ left.sort()
 right.sort()
 
 distances ::= []
-for i:= 0; i < left.len(); i++ {
+for i := 0; i < left.len(); i++ {
     distances.push(abs(left[i] - right[i]))
 }
 
