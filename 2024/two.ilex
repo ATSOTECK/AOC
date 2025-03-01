@@ -1,0 +1,88 @@
+use { milliseconds } from <ilex>
+use { abs } from <math>
+
+reports ::= []
+
+withFile ('input/2.txt', 'r') {
+    line := file.readln()
+    while line != null {
+        line = line.trim()
+        strs ::= line.split(' ')
+        report ::= []
+
+        strs.forEach(fn |str| report.push(str.toNumber()))
+        reports.push(report)
+
+        line = file.readln()
+    }
+}
+
+start := milliseconds()
+safe := 0
+
+reports.forEach(fn |report| -> {
+    increasing ::= report[0] < report[1]
+    isSafe := true
+
+    for i := 0; i < report.len() - 1; i++ {
+        a := report[i];
+        b := report[i + 1]
+
+        diff ::= abs(a - b)
+        if ((diff < 1 || diff > 3) || (increasing && a > b) || (!increasing && a < b)) {
+            isSafe = false
+            break
+        }
+    }
+
+    if isSafe {
+        safe++
+    }
+})
+
+end := milliseconds()
+
+println('Part one answer is {safe} and it took {end - start} ms to find it.')
+
+start = milliseconds()
+safe = 0
+
+reports.forEach(fn |report| -> {
+    increasing ::= report[0] < report[1]
+    isSafe := true
+    removed := false
+
+    for i := 0; i < report.len() - 1; i++ {
+        a := report[i];
+        b := report[i + 1]
+
+        diff ::= abs(a - b)
+        if ((diff < 1 || diff > 3) || (increasing && a > b) || (!increasing && a < b)) {
+            if !removed {
+                removed = true
+                report.erase(i)
+                i = 0
+            } else {
+                isSafe = false
+                break
+            }
+        }
+    }
+
+    if isSafe {
+        safe++
+    }
+})
+
+end = milliseconds()
+
+println('Part two answer is {safe} and it took {end - start} ms to find it.')
+
+// '1' 2 7 8 9
+// 1 '2' 7 8 9
+// 1 7 '8' 9
+
+'1' 2 7 8 9
+1 '2' 7 8 9
+'1' 7 8 9
+
