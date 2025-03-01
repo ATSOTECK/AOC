@@ -1,0 +1,36 @@
+use { milliseconds, seconds } from <ilex>
+use { abs } from <math>
+
+left ::= []
+right ::= []
+
+withFile ('input/1.txt', 'r') {
+    line := file.readln()
+    while (line != null) {
+        line = line.trim()
+        split ::= line.split('   ')
+        left.push(split[0].toNumber())
+        right.push(split[1].toNumber())
+
+        line = file.readln()
+    }
+}
+
+start ::= milliseconds()
+left.sort()
+right.sort()
+
+distances ::= []
+for i:= 0; i < left.len(); i++ {
+    distances.push(abs(left[i] - right[i]))
+}
+
+distance ::= distances.reduce(fn |a, v| a + v)
+end ::= milliseconds()
+
+println('Part one answer is {distance} and it took {end - start} ms to find it.')
+
+total := 0
+left.forEach(fn |n| total += n * right.count(n))
+
+println('Part 2 answer is {total}.')
