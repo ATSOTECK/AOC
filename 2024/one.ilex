@@ -6,7 +6,7 @@ right ::= []
 
 withFile ('input/1.txt', 'r') {
     line := file.readln()
-    while (line != null) {
+    while line != null {
         line = line.trim()
         split ::= line.split('   ')
         left.push(split[0].toNumber())
@@ -30,9 +30,9 @@ end := milliseconds()
 
 println('Part one answer is {distance} and it took {end - start} ms to find it.')
 
-start := milliseconds()
+start = milliseconds()
 total := 0
 left.forEach(fn |n| total += n * right.count(n))
-end := milliseconds()
+end = milliseconds()
 
 println('Part two answer is {total} and it took {end - start} ms to find it.')
