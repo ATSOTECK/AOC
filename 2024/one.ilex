@@ -1,4 +1,4 @@
-use { milliseconds, seconds } from <ilex>
+use { milliseconds } from <ilex>
 use { abs } from <math>
 
 left ::= []
@@ -16,7 +16,7 @@ withFile ('input/1.txt', 'r') {
     }
 }
 
-start ::= milliseconds()
+start := milliseconds()
 left.sort()
 right.sort()
 
@@ -26,11 +26,13 @@ for i:= 0; i < left.len(); i++ {
 }
 
 distance ::= distances.reduce(fn |a, v| a + v)
-end ::= milliseconds()
+end := milliseconds()
 
 println('Part one answer is {distance} and it took {end - start} ms to find it.')
 
+start := milliseconds()
 total := 0
 left.forEach(fn |n| total += n * right.count(n))
+end := milliseconds()
 
-println('Part 2 answer is {total}.')
+println('Part two answer is {total} and it took {end - start} ms to find it.')
